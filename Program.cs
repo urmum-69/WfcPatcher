@@ -65,6 +65,8 @@ namespace WfcPatcher {
 			Console.WriteLine( "Usage: WfcPatcher [options] game1.nds [game2.nds] [game3.nds] [...]" );
 			Console.WriteLine();
 			Console.WriteLine( "Command line options:" );
+			Console.WriteLine( "  -s, --substitute example.com" );
+			Console.WriteLine( "    Replace the URL provided instead of nintendowifi.net." );
 			Console.WriteLine( "  -d, --domain example.com" );
 			Console.WriteLine( "    Point the NWFC URLs to a different URL instead." );
 		}
@@ -485,7 +487,11 @@ namespace WfcPatcher {
 			bool replaced = ReplaceInData( data, "https://", "http://", paddingByte, writeAdditionalBytePostString );
 
 			if ( CommandLineArguments.Domain != null ) {
-				replaced = ReplaceInData( data, "nintendowifi.net", CommandLineArguments.Domain, paddingByte, writeAdditionalBytePostString ) || replaced;
+				if (CommandLineArguments.Substitute != null ) {
+					replaced = ReplaceInData( data, CommandLineArguments.Substitute, CommandLineArguments.Domain, paddingByte, writeAdditionalBytePostString ) || replaced;
+				} else {
+					replaced = ReplaceInData( data, "nintendowifi.net", CommandLineArguments.Domain, paddingByte, writeAdditionalBytePostString ) || replaced;
+				}
 			}
 
 			return replaced;

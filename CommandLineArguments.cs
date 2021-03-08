@@ -7,9 +7,11 @@ namespace WfcPatcher {
 	static class CommandLineArguments {
 		public static string[] Filenames { get; private set; }
 		public static string Domain = null;
+		public static string Substitute = null;
 
 		public static bool ParseCommandLineArguments( string[] args ) {
 			bool parseSuccess = true;
+			int maxLength = "nintendowifi.net".Length;
 
 			try {
 				List<string> filenames = new List<string>();
@@ -19,11 +21,20 @@ namespace WfcPatcher {
 						case "-d":
 						case "--domain":
 							string domain = args[++i];
-							int maxLength = "nintendowifi.net".Length;
 							if ( domain.Length <= maxLength ) {
 								Domain = domain;
 							} else {
 								Console.WriteLine( "Replacement domain cannot be longer than original domain ({0} characters).", maxLength );
+								parseSuccess = false;
+							}
+							break;
+						case "-s":
+						case "--substitute":
+							string substitute = args[++i];
+							if ( substitute.Length <= maxLength ) {
+								Substitute = substitute;
+							} else {
+								Console.WriteLine( "Substituted domain cannot be longer than original domain ({0} characters).", maxLength );
 								parseSuccess = false;
 							}
 							break;
