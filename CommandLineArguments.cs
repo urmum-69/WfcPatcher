@@ -39,12 +39,17 @@ namespace WfcPatcher {
 							}
 							break;
 						default:
-							filenames.Add( args[i] );
+							if ( System.IO.File.Exists( args[i] ) ) {
+								filenames.Add( args[i] );
+							}
 							break;
 					}
 				}
-
 				Filenames = filenames.ToArray();
+				if ( Filenames.Length == 0 ) {
+					Console.WriteLine( "No valid file to patch was provided!" );
+					parseSuccess = false;
+				}
 			} catch ( IndexOutOfRangeException ) {
 				Console.WriteLine( "Last given option needs more parameters!" );
 				parseSuccess = false;

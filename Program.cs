@@ -22,7 +22,7 @@ namespace WfcPatcher {
 			Console.WriteLine();
 
 			if ( !CommandLineArguments.ParseCommandLineArguments( args ) ) {
-				Console.WriteLine( "Error parsing command line options!" );
+				Console.WriteLine( "Error parsing command line options!\n" );
 				PrintUsage();
 				return;
 			}
@@ -505,6 +505,7 @@ namespace WfcPatcher {
 
 			var results = data.Locate( searchBytes );
 			if ( results.Length == 0 ) {
+				Console.WriteLine("Could not locate string in file");
 				return false;
 			}
 
